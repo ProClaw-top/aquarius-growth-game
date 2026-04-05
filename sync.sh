@@ -5,8 +5,8 @@
 
 # 设置
 REPO_NAME="aquarius-growth-game"
-GITHUB_USER="" # TODO: 设置GitHub用户名
-GITHUB_TOKEN="" # TODO: 设置GitHub token
+GITHUB_USER="ProClaw-top"
+GITHUB_TOKEN="" # 不需要token，使用SSH或已认证的gh
 
 # 检查文件变化
 function check_changes() {
@@ -39,11 +39,20 @@ function check_changes() {
 function sync_to_github() {
     echo "同步到GitHub..."
     
-    # TODO: GitHub仓库初始化
-    # TODO: 上传文件
-    # TODO: 提交变更
+    # 检查是否有新文件
+    git status
     
-    echo "GitHub同步完成"
+    # 如果有新文件，提交并推送
+    if [ ! -z "$(git status --porcelain)" ]; then
+        echo "有新文件需要提交"
+        git add .
+        git commit -m "Auto sync: $(date '+%Y-%m-%d %H:%M:%S')"
+        git push
+        echo "GitHub同步完成"
+    else
+        echo "没有新文件需要同步"
+        echo "GitHub同步完成"
+    fi
 }
 
 # 理念宣告
